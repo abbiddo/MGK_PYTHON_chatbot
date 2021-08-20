@@ -24,7 +24,10 @@ class Musice(commands.Cog):
         embed=discord.Embed(title=data['title'],url=url,color=discord.Color.red())
         embed.set_author(name=data['uploader'],url=data['url'])
         embed.add_field(name='조회수',value=data['view_count'],inline=True)
-        embed.add_field(name='좋아요 수',value=data['like_count'],inline=True)
+        if 'like_count' in data:
+            embed.add_field(name='좋아요 수',value=data['like_count'],inline=True)
+        else:
+            embed.add_field(name='좋아요 수',value='비공개',inline=True)
         embed.add_field(name='업로드 날짜',value=data['upload_date'],inline=True)
         embed.set_image(url=data['thumbnail'])
         await ctx.send(embed=embed)
