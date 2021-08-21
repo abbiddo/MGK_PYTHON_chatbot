@@ -88,11 +88,16 @@ class Music(commands.Cog):
             
         n=0
         try:
-            n=await self.client.wait_for("message",timeout=60.0,check=checkAnswer)
-            
-            await ctx.send(url_lst[int(n.content)-1])
-            embed=discord.Embed(title='음악 재생',description='음악 재생을 준비하고 있어요. 잠시만 기다려 주세요!',color=0xffd700)
-            await ctx.send(embed=embed)
+            while True:
+                n=await self.client.wait_for("message",timeout=60.0,check=checkAnswer)
+                if n.content.isdigit() and int(n.content)>0 and int(n.content)<6:
+                    await ctx.send(url_lst[int(n.content)-1])
+                    embed=discord.Embed(title='음악 재생',description='음악 재생을 준비하고 있어요. 잠시만 기다려 주세요!',color=0xffd700)
+                    await ctx.send(embed=embed)
+                    break
+
+                embed=discord.Embed(title='오류 발생',description='번호를 잘못 입력하셨습니다\n목록에 있는 숫자만 입력해주세요',color=discord.Color.red())
+                await ctx.send(embed=embed)
                         
                 
         except asyncio.TimeoutError:
