@@ -53,7 +53,7 @@ class Quiz(commands.Cog):
             await ctx.send(embed=embed)
 #-------------------------------------------------------------- 
     @commands.command(name = "랭킹")
-    async def _rank(self,ctx,nameList=[]):
+    async def _rank(self,ctx,*nameList):
         with open("data/score.json", 'r', encoding='utf-8') as f:
             self.scoreDict = json.load(f)
         score = sorted(self.scoreDict.items(), key = lambda x : x[1])

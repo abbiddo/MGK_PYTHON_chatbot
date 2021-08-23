@@ -12,7 +12,7 @@ class Music(commands.Cog):
         self.DL=YoutubeDL(option)
 #-------------------------------------------------------------- 
     @commands.command(name="음악재생")
-    async def play_music(self,ctx,keywords=[]):
+    async def play_music(self,ctx,*keywords):
         
         if len(keywords)==0:
             embed=discord.Embed(title='오류 발생',description='검색어를 입력해주세요',color=discord.Color.red())
