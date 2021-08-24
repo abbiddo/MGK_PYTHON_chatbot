@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
+import asyncio
 
 class Food(commands.Cog):
     def __init__(self, client):
@@ -22,10 +23,20 @@ class Food(commands.Cog):
         soup=BeautifulSoup(response.text,"html.parser")
         data=soup.select("li.server_render_search_result_item > div.list-restaurant-item")
 
+        if len(data)==0:
+            embed=discord.Embed(title='오류 발생',description='검색 결과가 없습니다',color=discord.Color.red())
+            await ctx.send(embed=embed)
+            raise commands.CommandError('No search results')
+    
+        if len(data)>3:
+            limit=3
+        else:
+            limit=len(data)
+            
         embed=discord.Embed(title='맛집 추천',description='%s 맛집입니다'%food,color=0xffd770)
         await ctx.send(embed=embed)
         
-        for i in data[0:3]:
+        for i in data[:limit]:
             image=i.select_one('img').get('data-original')
             link=i.select_one('a').get('href')
             title=i.select_one('h2.title').text.replace('\n', '')
@@ -44,10 +55,9 @@ class Food(commands.Cog):
             embed.add_field(name='리뷰 수',value=review,inline=True)
             embed.add_field(name='링크',value='https://www.mangoplate.com%s'%link)
 
-            if 'http' in image:
+            if 'https' in image:
                 embed.set_thumbnail(url=image)
-            else:
-                pass
+                
             await ctx.send(embed=embed)
 #--------------------------------------------------------------
 def setup(client):

@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
-from random import choice
 
 class Covid(commands.Cog):
     def __init__(self, client):
@@ -19,6 +18,5 @@ class Covid(commands.Cog):
         embed=discord.Embed(title='코로나 확진자 수',description="전 날 확진자 수는 %s명이고, 누적 확진자 수는 %s명 입니다."%(yesterday[0].text,total[0].text),color=0xff4500)
         await ctx.send(embed=embed)
 #--------------------------------------------------------------
-    
 def setup(client):
     client.add_cog(Covid(client))
