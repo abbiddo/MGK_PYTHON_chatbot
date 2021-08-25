@@ -20,8 +20,8 @@ class Guid(commands.Cog):
         embed.add_field(name="!코로나",value="전 날 코로나 확진자와 누적 확진자 수를 알려줍니다",inline=False)
         embed.add_field(name="!음악재생",value="유튜브에 검색어를 검색해 음원을 재생합니다\n음성채널을 연결하고 명령어를 입력하세요\n검색어를 함께 입력해주세요\n- !음악종료 : 음악을 종료합니다\n- !일시정지 : 음악을 일시 정지합니다.\n- !다시시작 : 음악을 다시 시작합니다.",inline=False)
         embed.add_field(name="!유튜브",value="유튜브 링크의 미리보기 embed를 출력합니다",inline=False)
-        embed.add_field(name="!맛집",value="맛집을 검색합니다\n명령어와 함께 지역,음식을 입력하세요",inline=False)
-        embed.add_field(name="!메뉴추천",value="메뉴 추천 후 맛집을 검색합니다\n명령어 입력 시 나오는 문구를 따라주새요",inline=False)
+        embed.add_field(name="!맛집 (지역 음식)",value="맛집을 검색합니다\n명령어와 함께 지역,음식을 입력하세요",inline=False)
+        embed.add_field(name="!메뉴추천",value="메뉴 추천 후 맛집을 검색합니다\n명령어 입력 시 나오는 문구를 따라주세요",inline=False)
 
         await ctx.send(embed=embed)
 #--------------------------------------------------------------

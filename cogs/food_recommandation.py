@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import asyncio
 import json
+from datetime import *
 from random import *
 
 class LunchRecommandation(commands.Cog):
@@ -29,6 +30,7 @@ class LunchRecommandation(commands.Cog):
             return message.author==ctx.author and message.channel==ctx.channel
 
         while True:
+            re=0
             categories=list(self.lunchDict.keys())
             embed=discord.Embed(title='%s 맛집 추천'%day,description='%s중에 하나를 입력하세요'%categories,color=0xffa07a)
             await ctx.send(embed=embed)
@@ -50,12 +52,13 @@ class LunchRecommandation(commands.Cog):
             except asyncio.TimeoutError:
                 embed=discord.Embed(title='시간초과',description="명령어를 다시 입력하세요",color=discord.Color.red())
                 await ctx.send(embed=embed)
+                raise commands.CommandError('TimeOver')
 
             try:
                 while True:
                     message=await self.client.wait_for("message",timeout=60.0,check=checkMessage)
                     if '좋아요' in message.content:
-                        embed=discord.Embed(title='',description='현재 지역을 입력 해주세요. %s 맛집을 찾아드릴게요!'%lunch,color=0xffa07a)
+                        embed=discord.Embed(title='',description='지역을 입력 해주세요. %s 맛집을 찾아드릴게요!'%lunch,color=0xffa07a)
                         await ctx.send(embed=embed)
 
                         keyword=''
@@ -66,6 +69,7 @@ class LunchRecommandation(commands.Cog):
                         except asyncio.TimeoutError:
                             embed=discord.Embed(title='시간초과',description="명령어를 다시 입력하세요",color=discord.Color.red())
                             await ctx.send(embed=embed)
+                            raise commands.CommandError('TimeOver')
 
                         
                         url="https://www.mangoplate.com/search/%s"%keyword
@@ -120,9 +124,10 @@ class LunchRecommandation(commands.Cog):
                         try:
                             while True:
                                 message=await self.client.wait_for("message",timeout=60.0,check=checkMessage)
-                                if message.content=='y':
+                                if message.content=='네':
+                                    re=1
                                     break
-                                elif message.content=='n':
+                                elif message.content=='아니오':
                                     embed=discord.Embed(title='',description='맛집 추천을 종료합니다',color=discord.Color.red())
                                     await ctx.send(embed=embed)
                                     break
@@ -132,6 +137,7 @@ class LunchRecommandation(commands.Cog):
                         except asyncio.TimeoutError:
                             embed=discord.Embed(title='시간초과',description="명령어를 다시 입력하세요",color=discord.Color.red())
                             await ctx.send(embed=embed)
+                            raise commands.CommandError('TimeOver')
                             
                         break
                     
@@ -141,7 +147,10 @@ class LunchRecommandation(commands.Cog):
             except asyncio.TimeoutError:
                 embed=discord.Embed(title='시간초과',description="명령어를 다시 입력하세요",color=discord.Color.red())
                 await ctx.send(embed=embed)
-            break
+                raise commands.CommandError('TimeOver')
+
+            if re!=1:
+                break
 #--------------------------------------------------------------
 def setup(client):
     client.add_cog(LunchRecommandation(client))
