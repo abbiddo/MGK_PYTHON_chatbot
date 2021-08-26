@@ -22,6 +22,7 @@ class Guid(commands.Cog):
         embed.add_field(name="!유튜브",value="유튜브 링크의 미리보기 embed를 출력합니다",inline=False)
         embed.add_field(name="!맛집 (지역 음식)",value="맛집을 검색합니다\n명령어와 함께 지역,음식을 입력하세요",inline=False)
         embed.add_field(name="!메뉴추천",value="메뉴 추천 후 맛집을 검색합니다\n명령어 입력 시 나오는 문구를 따라주세요",inline=False)
+        embed.add_field(name="!끝말잇기",value="봇과 끝말잇기 게임을 합니다\n사용자가 먼저 시작하세요",inline=False)
 
         await ctx.send(embed=embed)
 #--------------------------------------------------------------
