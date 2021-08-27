@@ -37,7 +37,44 @@ class Random(commands.Cog):
 
         embed=discord.Embed(title='결과',description=num,color=discord.Color.blue())
         await ctx.send(embed=embed)
-#--------------------------------------------------------------   
+#--------------------------------------------------------------
+    @commands.command(name = "추첨")
+    async def _userchoice(self,ctx):
+        embed=discord.Embed(title='당첨자 추첨',description='추첨에 참여하는 분들은 참여의사를 밝혀주세요\n마지막에 꼭 "끝"을 입력해주세요',color=discord.Color.blue())
+        await ctx.send(embed=embed)
+
+        def checkAnswer(message):
+            return message.channel==ctx.channel
+
+        person=[]
+        while True:
+            message=await self.client.wait_for("message",check=checkAnswer)
+            if message.content=='끝':
+                break
+            if message.author.nick not in person:
+                person.append(message.author.nick)
+
+        embed=discord.Embed(title='당첨자 인원',description='몇 명을 추첨하실 건가요? (숫자만 입력해주세요)',color=discord.Color.blue())
+        await ctx.send(embed=embed)
+
+        while True:
+            message=await self.client.wait_for("message",check=checkAnswer)
+            
+            if len(person)>int(message.content):
+                break
+            
+            embed=discord.Embed(title='오류 발생',description='범위를 확인해주세요',color=discord.Color.red())
+            await ctx.send(embed=embed)
+            
+        newper=''
+        for i in range(int(message.content)):
+            a=choice(person)
+            person.remove(a)
+            newper+=a+' '
+
+        embed=discord.Embed(title='추첨 결과',description=newper,color=discord.Color.blue())
+        await ctx.send(embed=embed)
+#--------------------------------------------------------------
 def setup(client):
     client.add_cog(Random(client))
             
