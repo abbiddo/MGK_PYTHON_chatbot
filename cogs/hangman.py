@@ -43,8 +43,6 @@ class Hangman(commands.Cog):
 
         be*=2
 
-        print(letters,be)
-
         while be!=0:
             embed=discord.Embed(title='',description='%s\n기회 %s번 남았습니다'%(letters,be),color=0xffa07a)
             await ctx.send(embed=embed)
@@ -56,8 +54,6 @@ class Hangman(commands.Cog):
                 for i in range(len(answer)):
                     if spell==answer[i]:
                         letters=letters[:2*i]+spell+' '+letters[2*i+2:]
-
-            print(letters)
 
             if '-' not in letters:
                 embed=discord.Embed(title="승",description='답은 **%s**(%s)입니다'%(answer,box2[idx].text),color=discord.Color.blue())

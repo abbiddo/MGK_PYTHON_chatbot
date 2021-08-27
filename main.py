@@ -24,7 +24,7 @@ def main():
     @client.event
     async def on_member_join(member):
         embed=discord.Embed(title='Hello!',description='%s님 안녕하세요\n흥챗봇 보려고 오셨나요? 환영합니다!\n가이드 명령어를 통해 기능을 확인해주세요!'%member.name,color=discord.Color.red())
-        await member.guild.text_channels[0].send(embed=embed)
+        await member.guild.text_channels[0].senond(embed=embed)
 
     @client.event
     async def on_member_remove(member):

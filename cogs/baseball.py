@@ -41,7 +41,6 @@ class Baseball(commands.Cog):
             ball=0
 
             message=await self.client.wait_for("message",check=checkAnswer)
-            m=message.content
 
             lst=[]
             for i in message.content:

@@ -57,14 +57,21 @@ class Random(commands.Cog):
         embed=discord.Embed(title='당첨자 인원',description='몇 명을 추첨하실 건가요? (숫자만 입력해주세요)',color=discord.Color.blue())
         await ctx.send(embed=embed)
 
+
         while True:
             message=await self.client.wait_for("message",check=checkAnswer)
-            
-            if len(person)>int(message.content):
-                break
-            
-            embed=discord.Embed(title='오류 발생',description='범위를 확인해주세요',color=discord.Color.red())
-            await ctx.send(embed=embed)
+
+            if message.content.isdigit():
+                if len(person)>int(message.content):
+                    break
+
+                else:
+                    embed=discord.Embed(title='오류 발생',description='범위를 확인해주세요',color=discord.Color.red())
+                    await ctx.send(embed=embed)
+
+            else:
+                embed=discord.Embed(title='오류 발생',description='숫자만 입력해주세요',color=discord.Color.red())
+                await ctx.send(embed=embed) 
             
         newper=''
         for i in range(int(message.content)):
