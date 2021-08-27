@@ -8,12 +8,12 @@ class Baseball(commands.Cog):
         self.client=client
 #--------------------------------------------------------------        
     @commands.command(name = "숫자야구")
-    async def _quiz(self,ctx):
+    async def _baseball(self,ctx):
         embed=discord.Embed(title='숫자 야구 게임',description='숫자를 맞추는 게임입니다\n숫자와 자리가 일치한다면 Strike\n숫자는 일치하지만 자리가 일치하지 않으면 Ball\n\n난이도를 선택해주세요 (상 중 하)',color=discord.Color.blue()) 
         await ctx.send(embed=embed)
 
         def checkAnswer(message):
-            return message.author==ctx.author and message.channel==ctx.channel
+            return message.channel==ctx.channel
 
         message=await self.client.wait_for("message",check=checkAnswer)
 
@@ -61,7 +61,7 @@ class Baseball(commands.Cog):
             await ctx.send(embed=embed)
                 
             if strike==len(num):
-                embed=discord.Embed(title='Win',description='정답입니다\n%s번째 승리하였습니다'%cnt,color=discord.Color.red())
+                embed=discord.Embed(title='Win',description='%s님 정답입니다\n%s번째 승리하였습니다'%(message.author.name,cnt),color=discord.Color.red())
                 await ctx.send(embed=embed)
                 break
 #--------------------------------------------------------------   

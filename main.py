@@ -20,7 +20,17 @@ def main():
         
     with open('token.txt','r') as f:
         token=f.read() #토큰 읽어오기
-    
+
+    @client.event
+    async def on_member_join(member):
+        embed=discord.Embed(title='Hello!',description='%s님 안녕하세요\n흥챗봇 보려고 오셨나요? 환영합니다!\n가이드 명령어를 통해 기능을 확인해주세요!'%member.name,color=discord.Color.red())
+        await member.guild.text_channels[0].send(embed=embed)
+
+    @client.event
+    async def on_member_remove(member):
+        embed=discord.Embed(title='Bye!',description='%s님이 나가셨습니다'%member.name,color=discord.Color.red())
+        await member.guild.text_channels[0].send(embed=embed)
+        
     client.run(token) #생성한 Bot 객체에 토큰을 넣어 실행
     
 if __name__ =='__main__':
